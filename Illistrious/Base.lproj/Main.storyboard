@@ -31,7 +31,14 @@
                             <outlet property="delegate" destination="3il-xZ-Vwo" id="46W-vl-qtK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Illistrious" id="F7d-rL-Olf"/>
+                    <navigationItem key="navigationItem" title="Illistrious" id="F7d-rL-Olf">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="z3Q-bY-gHU">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="3il-xZ-Vwo" id="pFm-ud-a4X"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pi2-xl-RRX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
