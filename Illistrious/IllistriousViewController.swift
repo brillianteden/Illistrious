@@ -11,11 +11,14 @@ import UIKit
 class IllistriousViewController: UITableViewController {
     
     var itemsArray = ["item1", "item2", "item3"]
+    let defaults = UserDefaults.standard
 
     @IBOutlet weak var itemText: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        if let items = defaults.array(forKey: "IllistriousArray") as? [String] {
+            itemsArray = items
+        }
     }
 
     //MARK: Create datasource methods
@@ -63,6 +66,7 @@ class IllistriousViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //When user clicks the "Add Item" button on the UIAlert
             self.itemsArray.append(textField.text!)
+            self.defaults.set(self.itemsArray, forKey: "IllistriousArray")
             self.tableView.reloadData()
         }
         
