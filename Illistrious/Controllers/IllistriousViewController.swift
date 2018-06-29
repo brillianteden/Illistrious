@@ -10,14 +10,27 @@ import UIKit
 
 class IllistriousViewController: UITableViewController {
     
-    var itemsArray = ["item1", "item2", "item3"]
+    var itemsArray = [Item]()
     let defaults = UserDefaults.standard
 
     @IBOutlet weak var itemText: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let newItem = Item()
+        newItem.title = "item1"
+        itemsArray.append(newItem)
+        
+        let newItem2 = Item()
+        newItem2.title = "item2"
+        itemsArray.append(newItem2)
+        
+        let newItem3 = Item()
+        newItem3.title = "item3"
+        itemsArray.append(newItem3)
+        
         if let items = defaults.array(forKey: "IllistriousArray") as? [String] {
-            itemsArray = items
+           
         }
     }
 
@@ -26,7 +39,11 @@ class IllistriousViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListItemCell", for: indexPath)
         
-        cell.textLabel?.text = itemsArray[indexPath.row]
+        let item = itemsArray[indexPath.row]
+        
+        cell.textLabel?.text = item.title
+        
+        cell.accessoryType = item.done  ? .checkmark : .none
         
         return cell
         
@@ -42,15 +59,9 @@ class IllistriousViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("You selected " + itemsArray[indexPath.row])
+        itemsArray[indexPath.row].done = !itemsArray[indexPath.row].done
         
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        }
-        else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
-        
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
@@ -65,7 +76,10 @@ class IllistriousViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //When user clicks the "Add Item" button on the UIAlert
-            self.itemsArray.append(textField.text!)
+            
+            let newItem = Item()
+            newItem.title = textField.text!
+            self.itemsArray.append(newItem)
             self.defaults.set(self.itemsArray, forKey: "IllistriousArray")
             self.tableView.reloadData()
         }
